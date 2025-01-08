@@ -1,0 +1,25 @@
+@import "./styles/variables.module";
+@import "./styles/space";
+
+:root:root {
+    --van-button-primary-background: #1B9881;
+    --van-button-primary-border-color: #1B9881;
+    --van-tabs-bottom-bar-height: 6px;
+    --van-tabs-bottom-bar-width: 56px;
+    --van-uploader-delete-icon-size: 25px;
+    --van-toast-position-bottom-distance: 1%;
+    --van-dialog-width: 60%;
+    --van-empty-description-font-size: 26px;
+    --van-field-word-limit-font-size: 28px;
+    --van-pull-refresh-loading-icon-size: 40px;
+    --van-pull-refresh-head-font-size: 30px;
+    --van-list-text-font-size: 30px;
+    --van-list-loading-icon-size: 40px;
+    --van-cell-line-height: 40px;
+    --van-font-size-md: 28px;
+    --van-field-error-message-font-size: 20px;
+}
+
+body {
+    background-color: $mainBg;
+}

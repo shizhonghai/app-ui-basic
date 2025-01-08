@@ -1,2 +1,1 @@
-# app-ui-basic
-基础平台 App UI 基础库
+# 基础平台 APP UI 基础库

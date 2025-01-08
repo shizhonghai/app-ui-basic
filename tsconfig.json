@@ -1,0 +1,48 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "useDefineForClassFields": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "removeComments": false,
+        "strict": true,
+        "jsx": "preserve",
+        "sourceMap": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ],
+        "isolatedModules": true,
+        "types": [
+            "pinia-plugin-persist",
+            "vite/client",
+            "node"
+        ],
+        "baseUrl": "./",
+        "paths": {
+            "/@/*": [
+                "./src/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.vue",
+        "src/**/*.tsx",
+        "src/**/*.d.ts",
+        "auto-imports.d.ts",
+        "postcss-px-to-viewport.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

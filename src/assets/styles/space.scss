@@ -1,0 +1,44 @@
+// 边距
+$spaceBase: 4px;
+
+@for $i from 1 through 20 {
+    .m-t-#{$i}x {
+        margin-top: $i * $spaceBase !important;
+    }
+
+    .m-r-#{$i}x {
+        margin-right: $i * $spaceBase !important;
+    }
+
+    .m-b-#{$i}x {
+        margin-bottom: $i * $spaceBase !important;
+    }
+
+    .m-l-#{$i}x {
+        margin-left: $i * $spaceBase !important;
+    }
+
+    .p-t-#{$i}x {
+        padding-top: $i * $spaceBase !important;
+    }
+
+    .p-r-#{$i}x {
+        padding-right: $i * $spaceBase !important;
+    }
+
+    .p-b-#{$i}x {
+        padding-bottom: $i * $spaceBase !important;
+    }
+
+    .p-l-#{$i}x {
+        padding-left: $i * $spaceBase !important;
+    }
+}
+
+@for $i from 24 through 30 {
+    .f-s-#{$i} {
+        //margin-top: $i * $spaceBase !important;
+        font-size: $i + px;
+    }
+
+}
