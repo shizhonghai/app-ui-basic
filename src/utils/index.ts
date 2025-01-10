@@ -13,9 +13,9 @@ const baseEncode = (data: any) => {
 
 // 解密
 const baseDecode = (data: any) => {
-    let param = data.replace(@/@/gi, '/');
-    param = JSON.parse(decode(param));
-    return param;
+    // let param = data.replace(@/@/gi, '/');
+    // param = JSON.parse(decode(param));
+    // return param;
 };
 
 // 解密 和  JAVA
@@ -75,4 +75,4 @@ const getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export { flattenArr, formatDate, baseEncode, baseDecode, handleBlobFile, base64Decode, base64Encode, getRandomInt };
+export { flattenArr, formatDate, baseEncode, handleBlobFile, base64Decode, base64Encode, getRandomInt };
