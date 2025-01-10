@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
-import pinia from '/@/stores/index';
+import pinia from '@/stores/index';
 import App from './App.vue';
 import router from './router';
-
+import { Icon } from 'vant';
 /**
  * Vant 中有个别组件是以函数的形式提供的，包括 Toast，Dialog，Notify 和 ImagePreview 组件。
  * 在使用函数组件时，unplugin-vue-components 无法解析自动注册组件，
@@ -13,6 +13,7 @@ import 'vant/es/notify/style';
 import 'vant/es/toast/style';
 import 'vant/es/image-preview/style';
 import './assets/base.scss';
+
 
 const app = createApp(App);
 
@@ -28,6 +29,7 @@ import('vconsole').then(VConsole => {
 
 // 导入通用自定义组件
 // app.component('Back', Back);
+app.use(Icon);
 app.use(pinia);
 app.use(router);
 app.mount('#app');

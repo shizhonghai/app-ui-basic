@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { loadFinish } from '@/utils/app';
 
 // @ts-ignore
 const router = createRouter({
@@ -12,15 +13,32 @@ const router = createRouter({
         {
             path: '/login',
             name: 'Login',
-            meta: {
-                hideMenu: false,
-            },
-            component: () => import('/@/views/login/index.vue'),
+            component: () => import('@/views/login/index.vue'),
         },
         {
             path: '/home',
             name: 'Home',
-            component: () => import('/@/views/home/index.vue'),
+            component: () => import('@/views/firstPage/home/index.vue'),
+        },
+        {
+            path: '/message',
+            name: 'Message',
+            component: () => import('@/views/firstPage/message/index.vue')
+        },
+        {
+            path: '/center',
+            name: 'Center',
+            component: () => import('@/views/firstPage/center/index.vue'),
+        },
+        {
+            path: '/details',
+            name: 'Details',
+            component: () => import('@/views/details/index.vue'),
+        },
+        {
+            path: '/details2',
+            name: 'Details2',
+            component: () => import('@/views/details/details2.vue'),
         },
     ],
 });
@@ -33,6 +51,10 @@ router.beforeEach((to: any, from: any, next: any) => {
 // 路由加载后
 router.afterEach(() => {
     // console.log('路由加载后');
+    // 加载完成，页面加载基础界面后給Android端此回调。通知Android端已经完成页面的基础加载。建议每个页面都需要调用此方法。
+    nextTick(() => {
+        loadFinish();
+    });
 });
 
 export default router;

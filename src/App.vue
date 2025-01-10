@@ -8,3 +8,9 @@ const router = useRouter();
         <RouterView></RouterView>
     </div>
 </template>
+
+<style>
+body {
+    font-size: 16px;
+}
+</style>

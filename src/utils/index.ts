@@ -13,7 +13,7 @@ const baseEncode = (data: any) => {
 
 // 解密
 const baseDecode = (data: any) => {
-    let param = data.replace(/@@/gi, '/');
+    let param = data.replace(@/@/gi, '/');
     param = JSON.parse(decode(param));
     return param;
 };
@@ -68,4 +68,11 @@ const handleBlobFile = (response: any, fileName: string) => {
     }, 0);
 };
 
-export { flattenArr, formatDate, baseEncode, baseDecode, handleBlobFile, base64Decode, base64Encode, backButtonClick, terminalDeviceInfo };
+// 随机数
+const getRandomInt = (min: number, max: number) => {
+    min = Math.ceil(min); // 向上取整
+    max = Math.floor(max); // 向下取整
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export { flattenArr, formatDate, baseEncode, baseDecode, handleBlobFile, base64Decode, base64Encode, getRandomInt };

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import qs from 'qs';
 import { showToast } from 'vant';
-import { Local } from '/@/utils/storage';
+import { Local } from '@/utils/storage';
 
 /**
  * 创建并配置一个 Axios 实例对象
@@ -10,7 +10,6 @@ const service: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     timeout: 50000, // 全局超时时间
 });
-
 /**
  * Axios请求拦截器，对请求进行处理
  * 1. 序列化get请求参数
@@ -50,7 +49,7 @@ service.interceptors.request.use(
  */
 const handleResponse = (response: AxiosResponse<any>) => {
     if (response.config.responseType !== 'blob') {
-        if (response.data.code !== 0) {
+        if (response.data.msg) {
             showToast({ message: response.data.msg, duration: 3000 });
         }
     }
