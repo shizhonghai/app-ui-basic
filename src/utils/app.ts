@@ -44,7 +44,7 @@ export const finishActivity = () => {
 
 // 调整指定页面
 export const goToActivity = (result: any) => {
-    result.webUrl = 'https://192.168.2.131:1000' + result.webUrl;
+    result.webUrl = import.meta.env.VITE_ADMIN_HOST_URL + result.webUrl;
     let resultStr = JSON.stringify(result);
     console.log('resultStr', resultStr);
     $App?.goToActivity(resultStr);
@@ -88,4 +88,15 @@ export const setDeviceInfo = (result: any) => {
 export const receiveSocketInfo = (result: any) => {
     let resultStr = JSON.stringify(result);
     $App?.receiveSocketInfo(resultStr);
+};
+
+
+// 获取APP版本号
+export const getAppVersionName = () => {
+    $App?.getAppVersionName();
+};
+
+// 回显APP版本号的信息
+export const appVersionName = (result: any) => {
+    $App?.appVersionName();
 };

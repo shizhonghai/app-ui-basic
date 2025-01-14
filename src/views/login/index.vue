@@ -24,10 +24,11 @@ import other from '@/utils/other';
 import request from '@/utils/request';
 import { showToast } from 'vant';
 const router = useRouter();
-let hostUrl = 'https://192.168.2.131:1000';
+let hostUrl = import.meta.env.VITE_ADMIN_HOST_URL;
+// let hostUrl = window.location.host;
 let websocketURL = import.meta.env.VITE_WEBSOCKET_URL;
 const state = reactive({
-    username: 'developer',
+    username: 'developer',   
     password: 'Yiview836266@',
     checked: false,
 });

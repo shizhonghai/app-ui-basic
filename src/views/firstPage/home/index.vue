@@ -10,6 +10,7 @@
         <div class="div-btn-box"><van-button type="primary" @click="setUserInfoApp">设置用户信息(setUserInfo)</van-button></div>
         <div class="div-btn-box"><van-button type="primary" @click="setDeviceInfoApp">设置设备信息(setDeviceInfo)</van-button></div>
         <div class="div-btn-box"><van-button type="primary" @click="sendSocketApp">发送socket指令(sendSocket)</van-button></div>
+        <div class="div-btn-box"><van-button type="primary" @click="getAppVersionNameApp">获取APP版本号(getAppVersionName)</van-button></div>
 
         <div class="div-btn-box">
             <h2>收到socket信息：</h2>
@@ -27,13 +28,19 @@
             <h2>全部登录信息：</h2>
             {{ JSON.stringify(loginInfo) }}
         </div>
+        <div class="div-btn-box">
+            <h2>APP版本号信息：</h2>
+            {{ versionName }}
+        </div>
     </div>
 </template>
 <script lang="ts" setup>
-import { goToActivity, reloadView, setUserInfo, setDeviceInfo, setMenuParamInfo, sendSocket } from '@/utils/app';
+import { goToActivity, reloadView, setUserInfo, setDeviceInfo, setMenuParamInfo, sendSocket, getAppVersionName } from '@/utils/app';
 import { getRandomInt } from '@/utils/index';
 let loginInfo: any = ref({});
 let content: any = ref('');
+let versionName: any = ref('');
+
 
 // 获取设备信息
 let getLoginInfoApp = (res: string) => {
@@ -68,6 +75,16 @@ const sendSocketApp = () => {
     });
 };
 
+// 触发获取app版本号
+const getAppVersionNameApp = () => {
+    getAppVersionName();
+};
+
+const appVersionName = (res: string) => {
+    versionName.value = res
+};
+window.appVersionName = appVersionName;
+
 // 刷新页面，调用次方法刷新整体页面
 const reloadViewApp = () => {
     reloadView();
@@ -83,7 +100,6 @@ const gotodetail = (key: string, webUrl: string) => {
     };
     goToActivity(params);
 };
-
 
 // 设置底部菜单参数信息
 let menu = [

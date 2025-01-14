@@ -37,7 +37,7 @@ export default defineConfig((mode: ConfigEnv) => {
         resolve: { alias }, // 路径别名配置
         server: {
             host: '0.0.0.0', // 服务器地址
-            https: true,
+            https: false,
             open: true, // 是否自动打开浏览器
             hmr: true, // 启用热更新
             port: 1000, //自定义端口
