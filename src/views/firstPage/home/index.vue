@@ -36,11 +36,11 @@
 </template>
 <script lang="ts" setup>
 import { goToActivity, reloadView, setUserInfo, setDeviceInfo, setMenuParamInfo, sendSocket, getAppVersionName } from '@/utils/app';
+import { setWebUrl } from '@/utils/index';
 import { getRandomInt } from '@/utils/index';
 let loginInfo: any = ref({});
 let content: any = ref('');
 let versionName: any = ref('');
-
 
 // 获取设备信息
 let getLoginInfoApp = (res: string) => {
@@ -81,7 +81,7 @@ const getAppVersionNameApp = () => {
 };
 
 const appVersionName = (res: string) => {
-    versionName.value = res
+    versionName.value = res;
 };
 window.appVersionName = appVersionName;
 
@@ -110,7 +110,7 @@ let menu = [
         key: 'home',
         showTitleColor: '#111111',
         unShowTitleColor: '#1989fa',
-        webUrl: 'http://192.168.2.114:1000/home',
+        webUrl: setWebUrl('/home'),
     },
     {
         showIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
@@ -119,7 +119,7 @@ let menu = [
         key: 'message',
         showTitleColor: '#111111',
         unShowTitleColor: '#1989fa',
-        webUrl: 'http://192.168.2.114:1000/message',
+        webUrl: setWebUrl('/message)'
     },
     {
         showIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
@@ -128,9 +128,11 @@ let menu = [
         key: 'center',
         showTitleColor: '#111111',
         unShowTitleColor: '#1989fa',
-        webUrl: 'http://192.168.2.114:1000/center',
-    },
-];
+        webUrl: setWebUrl('/center)',
+    }
+]
+
+// 通知APP 更新底部菜单信息
 const setMenuParamInfoApp = () => {
     menu[0].title = menu[0].title + getRandomInt(1, 10);
     menu[1].title = menu[1].title + getRandomInt(1, 10);

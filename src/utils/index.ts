@@ -75,4 +75,24 @@ const getRandomInt = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export { flattenArr, formatDate, baseEncode, handleBlobFile, base64Decode, base64Encode, getRandomInt };
+/**
+ *  设置图片URL
+ * @param {String} url 图片URL
+ */
+const setImageUrl = (url: string) => {
+    if (!url || typeof url !== 'string') return
+    let hostUrl = window.location.host;
+    return url.includes('http') ? url : hostUrl + '/api' + url
+};
+
+/**
+ *   设置APP跳转页面地址
+ * @param {String} path 需要跳转的路由地址
+ */
+const setWebUrl = (path: string) => {
+    if (!path || typeof path !== 'string') return
+    let hostUrl = window.location.host;
+    return hostUrl + path
+};
+
+export { flattenArr, formatDate, baseEncode, handleBlobFile, base64Decode, base64Encode, getRandomInt, setImageUrl, setWebUrl };

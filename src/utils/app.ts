@@ -1,18 +1,21 @@
 import router from '@/router/index';
+import { setImageUrl, setWebUrl } from '@/utils/index';
 /**
  * 跳转到APP首页
  */
-// let $App: any = null;
+let $App: any = null;
 // 加载完成，页面加载基础界面后給Android端此回调。通知Android端已经完成页面的基础加载。建议每个页面都需要调用此方法。
 
 export const gotoPage = (routerName: string) => {
     router.push(routerName);
 };
 
+// 返回
 export const gotoBack = () => {
     router.back();
 };
 
+// 加载完成，页面加载基础界面后給Android端此回调。通知Android端已经完成页面的基础加载。建议每个页面都需要调用此方法。
 export const loadFinish = () => {
     $App?.loadFinish();
 };
@@ -44,9 +47,8 @@ export const finishActivity = () => {
 
 // 调整指定页面
 export const goToActivity = (result: any) => {
-    result.webUrl = import.meta.env.VITE_ADMIN_HOST_URL + result.webUrl;
+    result.webUrl = setWebUrl(result.webUrl);
     let resultStr = JSON.stringify(result);
-    console.log('resultStr', resultStr);
     $App?.goToActivity(resultStr);
 };
 
