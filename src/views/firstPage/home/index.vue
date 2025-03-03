@@ -80,10 +80,10 @@ const getAppVersionNameApp = () => {
     getAppVersionName();
 };
 
-const appVersionName = (res: string) => {
-    versionName.value = res;
-};
-window.appVersionName = appVersionName;
+// const appVersionName = (res: string) => {
+//     versionName.value = res;
+// };
+// window.appVersionName = appVersionName;
 
 // 刷新页面，调用次方法刷新整体页面
 const reloadViewApp = () => {
@@ -119,7 +119,7 @@ let menu = [
         key: 'message',
         showTitleColor: '#111111',
         unShowTitleColor: '#1989fa',
-        webUrl: setWebUrl('/message)'
+        webUrl: setWebUrl('/message'),
     },
     {
         showIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
@@ -128,7 +128,7 @@ let menu = [
         key: 'center',
         showTitleColor: '#111111',
         unShowTitleColor: '#1989fa',
-        webUrl: setWebUrl('/center)',
+        webUrl: setWebUrl('/center'),
     }
 ]
 
