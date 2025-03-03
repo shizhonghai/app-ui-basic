@@ -80,10 +80,10 @@ const getAppVersionNameApp = () => {
     getAppVersionName();
 };
 
-// const appVersionName = (res: string) => {
-//     versionName.value = res;
-// };
-// window.appVersionName = appVersionName;
+const appVersionName = (res: string) => {
+    versionName.value = res;
+};
+window.appVersionName = appVersionName;
 
 // 刷新页面，调用次方法刷新整体页面
 const reloadViewApp = () => {
