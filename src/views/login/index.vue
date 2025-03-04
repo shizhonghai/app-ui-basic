@@ -19,49 +19,21 @@
 </template>
 
 <script lang="ts" setup>
-import { loginSuccess } from '@/utils/app';
-import other from '@/utils/other';
+import { login, getUserInfo, getTabMenu } from '@/api/login/index';
 import { setImageUrl, setWebUrl } from '@/utils/index';
-import request from '@/utils/request';
-import { showToast } from 'vant';
+import { useUserInfo } from '@/stores/userInfo';
+import { loginSuccess } from '@/utils/app';
 import { Local } from '@/utils/storage';
+import other from '@/utils/other';
+import { showToast } from 'vant';
+
 let websocketURL = import.meta.env.VITE_WEBSOCKET_URL;
+
 const state = reactive({
     username: 'developer',
     password: 'Yiview836266@',
     checked: false,
 });
-
-// 菜单列表
-// const menuParam = ref([
-//     {
-//         showIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
-//         unShowIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png',
-//         title: '首页',
-//         key: 'home',
-//         showTitleColor: '#111111',
-//         unShowTitleColor: '#1989fa',
-//         webUrl: hostUrl + '/home',
-//     },
-//     {
-//         showIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
-//         unShowIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png',
-//         title: '消息',
-//         key: 'message',
-//         showTitleColor: '#111111',
-//         unShowTitleColor: '#1989fa',
-//         webUrl: hostUrl + '/message',
-//     },
-//     {
-//         showIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png',
-//         unShowIconImage: 'https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png',
-//         title: '我的',
-//         key: 'center',
-//         showTitleColor: '#111111',
-//         unShowTitleColor: '#1989fa',
-//         webUrl: hostUrl + '/center',
-//     },
-// ]);
 
 // 假设登录成功，可以进行页面跳转或其他操作
 const gotoLogin = async () => {
@@ -71,100 +43,78 @@ const gotoLogin = async () => {
         return;
     }
 
-    // 请求登录接口
+    // 调用登录方法
     try {
-        const loginResult = await login({
+        let res: any = await login({
             username: state.username,
             password: state.password,
             grant_type: 'password',
             app_login: 'app_login',
             scope: 'server',
         });
-        // 缓存token
-        Local.set('token', loginResult?.access_token || '');
-
-        // 获取菜单数据 和 用户权限信息
-        const [menuData, userData] = await Promise.all([getTabMenu({ menuClassification: '2' }), getUserInfo()]);
-
-        // 处理格式化菜单数据
-        let menuParam = menuData.data.map((item: any) => {
-            let { checkedIcon, uncheckedIcon, checkedColor, uncheckedColor, name, permission, path } = item;
-            return {
-                showIconImage: setImageUrl(checkedIcon),
-                unShowIconImage: setImageUrl(uncheckedIcon),
-                title: name,
-                key: permission,
-                showTitleColor: checkedColor,
-                unShowTitleColor: uncheckedColor,
-                webUrl: setWebUrl(path),
-            };
-        });
-
-        console.log('登录成功连接websocket地址：', `ws://${websocketURL}/websocket/webSocketServer/1/0/${loginResult.user_id}/${loginResult.access_token}`);
-
-        // 登录成功 -- 调用app段方法进行通知
-        loginSuccess({
-            menuParam: menuParam,
-            menuThemeColor: '#FFFFFF',
-            mainPageStatusBarColor: '#FFFFFF',
-            userInfo: {
-                userName: loginResult.username,
-                password: state.password,
-                userRealName: loginResult.username,
-                phoneNumber: '13856788888',
-                headPath: loginResult.username,
-            },
-            deviceInfo: {
-                projectName: '华为手机',
-                logoAddress: 'https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png',
-                themeColor: '#ffffff',
-                addressIp: '123456789',
-                addressPort: '1000',
-                isHttps: '',
-                tenantId: '',
-                socketAddress: `ws://${websocketURL}/websocket/webSocketServer/1/0/${loginResult.user_id}/${loginResult.access_token}`,
-            },
-            token: loginResult.access_token,
-            isAutoLogin: state.checked,
-            clickBottomIsReload: false,
-        });
+        Local.set('token', res.access_token);
+        Local.set('refresh_token', res.refresh_token);
+        // 通知登录成功
+        signInSuccess(res);
     } catch (error) {
         showToast({ message: '登录失败，请重试', duration: 3000 });
     }
 };
 
-// 登录
-const login = (data: any) => {
-    // 密码加密
-    const encPassword = other.encryption(data.password, import.meta.env.VITE_PWD_ENC_KEY);
-    const { username, grant_type, app_login, scope } = data;
-    return request({
-        url: '/auth/oauth2/token',
-        method: 'post',
-        params: { username, grant_type, app_login, scope },
-        data: { password: encPassword },
-        headers: {
-            Authorization: 'Basic YXBwOmFwcA==',
-            skipToken: true,
-            'Content-Type': 'application/x-www-form-urlencoded',
+// 登录成功后的跳转处理事件
+const signInSuccess = async loginResult => {
+    // 获取菜单数据 和 用户权限信息
+    const menuData = await getTabMenu();
+    const userData = await getUserInfo();
+
+    console.log('登录成功连接websocket地址：', `ws://${websocketURL}/websocket/webSocketServer/1/0/${loginResult.user_id}/${loginResult.access_token}`);
+
+    // 登录成功 -- 封装数据 -- 用户基本信息
+    let successInfo = {
+        menuParam: menuParam(menuData.data),
+        userData: userData.data,
+        menuThemeColor: '#FFFFFF',
+        mainPageStatusBarColor: '#FFFFFF',
+        userInfo: {
+            userName: loginResult.username,
+            password: state.password,
+            userRealName: loginResult.username,
+            phoneNumber: '13856788888',
+            headPath: loginResult.username,
         },
-    });
-};
-// 获取app的Tab菜单数据
-const getTabMenu = (data: any) => {
-    // 密码加密
-    return request({
-        url: '/base/menu/getUserMenu',
-        method: 'get',
-        params: data,
-    });
+        deviceInfo: {
+            projectName: '华为手机',
+            logoAddress: 'https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png',
+            themeColor: '#ffffff',
+            addressIp: '123456789',
+            addressPort: '1000',
+            isHttps: '',
+            tenantId: '',
+            socketAddress: `ws://${websocketURL}/websocket/webSocketServer/1/0/${loginResult.user_id}/${loginResult.access_token}`,
+        },
+        token: loginResult.access_token,
+        isAutoLogin: state.checked,
+        clickBottomIsReload: false,
+    };
+    // 登录成功 -- 调用app段方法进行通知
+    loginSuccess(successInfo);
+    // 设置用户信息存入缓存
+    useUserInfo().setUserInfos(successInfo);
 };
 
-const getUserInfo = () => {
-    // 密码加密
-    return request({
-        url: '/base/user/info',
-        method: 'get',
+// 处理格式化菜单数据
+const menuParam = (data: any) => {
+    return data.map((item: any) => {
+        let { checkedIcon, uncheckedIcon, checkedColor, uncheckedColor, name, permission, path } = item;
+        return {
+            showIconImage: setImageUrl(checkedIcon),
+            unShowIconImage: setImageUrl(uncheckedIcon),
+            title: name,
+            key: permission,
+            showTitleColor: checkedColor,
+            unShowTitleColor: uncheckedColor,
+            webUrl: setWebUrl(path),
+        };
     });
 };
 

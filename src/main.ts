@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import pinia from '@/stores/index';
+import { directive } from '@/directive';
 import App from './App.vue';
 import router from './router';
 import { Icon } from 'vant';
@@ -29,7 +30,5 @@ import('vconsole').then(VConsole => {
 
 // 导入通用自定义组件
 // app.component('Back', Back);
-app.use(Icon);
-app.use(pinia);
-app.use(router);
-app.mount('#app');
+directive(app);
+app.use(Icon).use(pinia).use(router).mount('#app');
