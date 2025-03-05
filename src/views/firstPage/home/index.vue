@@ -32,11 +32,10 @@
             <h2>APP版本号信息：</h2>
             {{ versionName }}
         </div>
-        <van-button v-auth="'sy-add'" type="success">首页新增（sy-add）</van-button>
-        <van-button v-auth="'ml-add'" type="success">目录新增（ml-add）</van-button>
-        <van-button v-auth="'xx-add'" type="success">消息新增（xx-add）</van-button>
-        <van-button v-auth="'wd-add'" type="success">我的新增（wd-add）</van-button>
-        <van-button v-auth="'gwc-add'" type="success">购物车新增（gwc-add）</van-button>
+        <van-button v-auth="'sy-add'" type="success">新增</van-button>
+        <van-button v-auth="'sy-sc'" type="success">删除</van-button>
+        <van-button v-auth="'sy-xg'" type="success">修改</van-button>
+        <van-button v-auth="'sy-xq'" type="success">详情</van-button>
 
     </div>
 </template>

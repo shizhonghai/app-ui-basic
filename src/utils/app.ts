@@ -33,7 +33,6 @@ export const loginSuccess = (result: any) => {
 
 // 结束当前页面并返回登录页面。
 export const finishAndGoToLogin = () => {
-    // router.push('/login');
     localStorage.clear(); // 清空所有 localStorage 数据
     $App?.finishAndGoToLogin();
 };

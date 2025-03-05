@@ -1,6 +1,10 @@
 <template>
     <div>
         <van-nav-bar title="标题(finishActivity)" left-text="返回" left-arrow @click-left="finishActivity" />
+        <div class="div-btn-box" @click="finishActivity()">
+            <h2>返回</h2>
+        </div>
+
         <div class="tip-text">详情页面</div>
         <div class="tip-text" @click="gotoPage('/details2')">详情页面2</div>
 
@@ -30,8 +34,7 @@ window.getLoginInfo = (res: string) => {
     loginInfo.value = JSON.parse(res);
 };
 
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 <style lang="scss" scoped>
 .tip-text {

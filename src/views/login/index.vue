@@ -98,8 +98,8 @@ const signInSuccess = async loginResult => {
     };
     // 登录成功 -- 调用app段方法进行通知
     loginSuccess(successInfo);
-    // 设置用户信息存入缓存
-    useUserInfo().setUserInfos(successInfo);
+        // 设置用户信息存入缓存
+        useUserInfo().setUserInfos(successInfo);
 };
 
 // 处理格式化菜单数据

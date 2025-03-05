@@ -1,6 +1,9 @@
 <template>
     <div>
         <van-nav-bar title="标题(finishActivity)" left-text="返回" left-arrow @click-left="finishActivity" />
+        <div class="div-btn-box" @click="finishActivity()">
+            <h2>返回</h2>
+        </div>
         <video ref="video" autoplay></video>
         <button @click="takePhoto">拍照</button>
         <canvas ref="canvas" style="display: none"></canvas>

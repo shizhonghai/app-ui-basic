@@ -81,7 +81,7 @@ const getRandomInt = (min: number, max: number) => {
  */
 const setImageUrl = (url: string) => {
     if (!url || typeof url !== 'string') return
-    let hostUrl = window.location.host;
+    let hostUrl = window.location.protocol + '//' + window.location.host;
     return url.includes('http') ? url : hostUrl + '/api' + url
 };
 
@@ -91,7 +91,7 @@ const setImageUrl = (url: string) => {
  */
 const setWebUrl = (path: string) => {
     if (!path || typeof path !== 'string') return
-    let hostUrl = window.location.host;
+    let hostUrl = window.location.protocol + '//' + window.location.host;
     return hostUrl + path
 };
 
