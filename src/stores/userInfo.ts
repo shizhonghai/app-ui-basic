@@ -28,7 +28,7 @@ export const useUserInfo = defineStore('userInfo', {
         enabled: true,
         strategies: [
             {
-                key: 'userInfo',
+                key: 'app:userInfo',
                 storage: localStorage,
             },
         ],

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <van-nav-bar title="标题(finishActivity)" left-text="返回" left-arrow @click-left="finishActivity" />
-        <div class="div-btn-box" @click="finishActivity()">
+        <van-nav-bar title="标题(gotoBack)" left-text="返回" left-arrow @click-left="gotoBack" />
+        <div class="div-btn-box" @click="gotoBack()">
             <h2>返回</h2>
         </div>
         <video ref="video" autoplay></video>
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { finishActivity } from '@/utils/app';
+import { gotoBack } from '@/utils/app';
 import { showToast, showNotify } from 'vant';
 
 const video = ref<HTMLVideoElement | null>(null);
@@ -80,5 +80,12 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+.div-btn-box {
+    text-align: center;
+    background-color: #cccccc;
+    margin: 20px;
+    padding: 26px 20px;
+    word-wrap: break-word;
 }
 </style>

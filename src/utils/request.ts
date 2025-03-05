@@ -62,6 +62,7 @@ const handleResponse = (response: AxiosResponse<any>) => {
 service.interceptors.response.use(handleResponse, error => {
     const status = Number(error.response.status) || 200;
     if (status === 424) {
+        localStorage.clear(); // 清除浏览器全部临时缓存
         /*useMessageBox()
             .confirm('令牌状态已过期，请点击重新登录')
             .then(() => {

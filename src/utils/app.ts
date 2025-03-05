@@ -37,10 +37,11 @@ export const finishAndGoToLogin = () => {
     $App?.finishAndGoToLogin();
 };
 
+// 返回上一页
 
 // 结束当前页面
 export const finishActivity = () => {
-    router.back();
+    // router.back();
     $App?.finishActivity();
 };
 

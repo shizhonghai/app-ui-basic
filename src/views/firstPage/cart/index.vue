@@ -1,10 +1,11 @@
 <template>
     <div>
         <div class="tip-text">购物车</div>
-        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('home', '/home')">首页</van-button></div>
-        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('message', '/message')">消息</van-button></div>
+        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('home:app', '/home')">首页</van-button></div>
+        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('message:app', '/message')">消息</van-button></div>
         <div class="div-btn-box"><van-button type="primary" @click="gotodetail('details', '/details')">详情</van-button></div>
 
+        <div>按钮权限</div>
         <van-button v-auth="'gwc-add'" type="success">新增</van-button>
         <van-button v-auth="'gwc-sc'" type="success">删除</van-button>
         <van-button v-auth="'gwc-xg'" type="success">修改</van-button>

@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="tip-text">首页</div>
-        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('message', '/message')">消息(goToActivity)</van-button></div>
-        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('center', '/center')">我的(goToActivity)</van-button></div>
+        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('message:app', '/message')">消息(goToActivity)</van-button></div>
+        <div class="div-btn-box"><van-button type="primary" @click="gotodetail('center:app', '/center')">我的(goToActivity)</van-button></div>
         <div class="div-btn-box"><van-button type="primary" @click="gotodetail('details', '/details')">详情(goToActivity)</van-button></div>
         <div class="div-btn-box"><van-button type="primary" @click="reloadViewApp">刷新页面(reloadView)</van-button></div>
         <div class="div-btn-box"><van-button type="primary" @click="setMenuParamInfoApp">更新底部菜单信息(setMenuParamInfo)</van-button></div>
@@ -32,6 +32,8 @@
             <h2>APP版本号信息：</h2>
             {{ versionName }}
         </div>
+
+        <div>按钮权限</div>
         <van-button v-auth="'sy-add'" type="success">新增</van-button>
         <van-button v-auth="'sy-sc'" type="success">删除</van-button>
         <van-button v-auth="'sy-xg'" type="success">修改</van-button>
@@ -46,6 +48,7 @@ import { getRandomInt } from '@/utils/index';
 let loginInfo: any = ref({});
 let content: any = ref('');
 let versionName: any = ref('');
+import { Local } from '@/utils/storage';
 
 // 获取设备信息
 let getLoginInfoApp = (res: string) => {
@@ -57,6 +60,13 @@ window.getLoginInfo = getLoginInfoApp;
 window.receiveSocketInfo = (res: string) => {
     content.value = JSON.parse(res);
 };
+
+setTimeout(() => {
+    console.log(Local.get('userInfo'));
+    console.log(Local.get('token'));
+    
+}, 2000);
+
 
 // 设置用户信息
 const setUserInfoApp = () => {
