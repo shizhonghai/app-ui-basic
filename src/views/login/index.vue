@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { login, getUserInfo, getTabMenu } from '@/api/login/index';
+import { login, getUserInfo, getTabMenu, getPageLogoApi } from '@/api/login/index';
 import { setImageUrl, setWebUrl } from '@/utils/index';
 import { useUserInfo } from '@/stores/userInfo';
 import { loginSuccess } from '@/utils/app';
@@ -33,6 +33,8 @@ const state = reactive({
     username: 'developer',
     password: 'Yiview836266@',
     checked: false,
+    startPageImage: '',
+    versionUpdateApi: import.meta.env.VITE_ADMIN_PROXY_PATH + '/api/base/sysVersion/getLatest',
 });
 
 // 假设登录成功，可以进行页面跳转或其他操作
@@ -53,19 +55,19 @@ const gotoLogin = async () => {
             app_login: 'app_login',
             scope: 'server',
         });
-        if(res.access_token){
+        if (res.access_token) {
             Local.set('token', res.access_token);
             Local.set('refresh_token', res.refresh_token);
         }
         // 通知登录成功
         signInSuccess(res);
     } catch (error) {
-        showToast({ message: '登录失败，请重试1', duration: 3000 });
+        showToast({ message: '登录失败，请重试', duration: 3000 });
     }
 };
 
 // 登录成功后的跳转处理事件
-const signInSuccess = async loginResult => {
+const signInSuccess = async (loginResult: any) => {
     try {
         // 获取菜单数据 和 用户权限信息
         const menuData = await getTabMenu();
@@ -90,7 +92,7 @@ const signInSuccess = async loginResult => {
                 projectName: '华为手机',
                 logoAddress: 'https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png',
                 themeColor: '#ffffff',
-                addressIp: '123456789',
+                addressIp: import.meta.env.VITE_ADMIN_PROXY_PATH,
                 addressPort: '1000',
                 isHttps: '',
                 tenantId: '',
@@ -99,15 +101,17 @@ const signInSuccess = async loginResult => {
             token: loginResult.access_token,
             isAutoLogin: state.checked,
             clickBottomIsReload: false,
+            startPageImage: setImageUrl(state.startPageImage),
+            versionUpdateApi: state.versionUpdateApi,
         };
 
-        // 登录成功 -- 调用app段方法进行通知
+        // // 登录成功 -- 调用app段方法进行通知
         loginSuccess(successInfo);
 
-        // 设置用户信息存入缓存
+        // // 设置用户信息存入缓存
         useUserInfo().setUserInfos(successInfo);
     } catch (error) {
-        showToast({ message: '登录失败，请重试2', duration: 3000 });
+        showToast({ message: '登录失败，请重试', duration: 3000 });
     }
 };
 
@@ -127,7 +131,16 @@ const menuParam = (data: any) => {
     });
 };
 
-onMounted(() => {});
+// 获取进入app的启动页面的图片
+const getPageLogo = async () => {
+    const { data } = await getPageLogoApi();
+    // 保存图片地址
+    state.startPageImage = data.find((item: any) => item.publicKey === 'APP_LOGO')?.publicValue || '';
+};
+
+onMounted(() => {
+    getPageLogo();
+});
 </script>
 
 <style lang="scss" scoped>

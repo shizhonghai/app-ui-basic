@@ -103,3 +103,8 @@ export const getAppVersionName = () => {
 export const appVersionName = (result: any) => {
     $App?.appVersionName();
 };
+
+// 版本检查并通知更新更新
+export const checkVersionUpdate = (result: any) => {
+    $App?.checkVersionUpdate();
+};

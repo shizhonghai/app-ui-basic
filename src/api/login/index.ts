@@ -46,6 +46,14 @@ export const getUserInfo = (data = { menuClassification: '2' }) => {
   });
 };
 
+// 获取进入app的启动页面的图片
+export const getPageLogoApi = (data = {}) => {
+  return request({
+    url: '/base/param/getLogo',
+    method: 'get',
+  });
+};
+
 
 
 
