@@ -24,7 +24,6 @@ import { setImageUrl, setWebUrl } from '@/utils/index';
 import { useUserInfo } from '@/stores/userInfo';
 import { loginSuccess } from '@/utils/app';
 import { Local } from '@/utils/storage';
-import other from '@/utils/other';
 import { showToast } from 'vant';
 
 let websocketURL = import.meta.env.VITE_WEBSOCKET_URL;
@@ -34,11 +33,12 @@ const state = reactive({
     password: 'Yiview836266@',
     checked: false,
     startPageImage: '',
-    versionUpdateApi: import.meta.env.VITE_ADMIN_PROXY_PATH + '/api/base/sysVersion/getLatest',
+    versionUpdateApi: import.meta.env.VITE_ADMIN_PROXY_PATH + '/base/sysVersion/getLatest/2',
 });
 
 // 假设登录成功，可以进行页面跳转或其他操作
 const gotoLogin = async () => {
+    // await getPageLogo();
     // localStorage.clear(); // 清除浏览器全部临时缓存
     // 检查用户名和密码是否为空
     if (!state.username || !state.password) {
@@ -73,7 +73,7 @@ const signInSuccess = async (loginResult: any) => {
         const menuData = await getTabMenu();
         const userData = await getUserInfo();
 
-        console.log('登录成功连接websocket地址：', `ws://${websocketURL}/websocket/webSocketServer/1/0/${loginResult.user_id}/${loginResult.access_token}`);
+        console.log('登录成功连接websocket地址：', `ws://${websocketURL}/websocket/webSocketServer/1/1/${loginResult.user_id}/${loginResult.access_token}`);
 
         // 登录成功 -- 封装数据 -- 用户基本信息
         let successInfo = {
@@ -96,7 +96,7 @@ const signInSuccess = async (loginResult: any) => {
                 addressPort: '1000',
                 isHttps: '',
                 tenantId: '',
-                socketAddress: `ws://${websocketURL}/websocket/webSocketServer/1/0/${loginResult.user_id}/${loginResult.access_token}`,
+                socketAddress: `ws://${websocketURL}/websocket/webSocketServer/1/1/${loginResult.user_id}/${loginResult.access_token}`,
             },
             token: loginResult.access_token,
             isAutoLogin: state.checked,
@@ -133,14 +133,16 @@ const menuParam = (data: any) => {
 
 // 获取进入app的启动页面的图片
 const getPageLogo = async () => {
-    const { data } = await getPageLogoApi();
-    // 保存图片地址
-    state.startPageImage = data.find((item: any) => item.publicKey === 'APP_LOGO')?.publicValue || '';
+    try {
+        const { data } = await getPageLogoApi();
+        // 保存图片地址
+        state.startPageImage = data.find((item: any) => item.publicKey === 'APP_LOGO')?.publicValue || '';
+    } catch (error) {
+        console.error('获取启动页面图片失败：', error);
+    }
 };
 
-onMounted(() => {
-    getPageLogo();
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -149,7 +151,6 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f2f2f2;
     background-image: linear-gradient(to right, #6dd5ed, #2193b0);
 }
 .login-title {

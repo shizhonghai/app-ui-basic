@@ -8,7 +8,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'Index',
-            redirect: '/home',
+            redirect: '/login',
         },
         {
             path: '/login',
@@ -59,12 +59,10 @@ router.beforeEach((to: any, from: any, next: any) => {
 });
 
 // 路由加载后
-router.afterEach(() => {
-    // console.log('路由加载后');
+router.afterEach(async (to: any, from: any, next: any) => {
     // 加载完成，页面加载基础界面后給Android端此回调。通知Android端已经完成页面的基础加载。建议每个页面都需要调用此方法。
-    nextTick(() => {
-        loadFinish();
-    });
+    await nextTick();
+    loadFinish();
 });
 
 export default router;
