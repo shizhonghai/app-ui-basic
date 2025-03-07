@@ -5,7 +5,7 @@ module.exports = {
                 // 如果是 Vant 的样式，使用 37.5 作为 rootValue
                 // 如果是自定义样式，也使用 37.5 作为 rootValue
                 // return file.indexOf('vant') !== -1 ? 37.5 : 75;
-                return 30;
+                return 37.5;
             },
             propList: ['*'], // 指定需要转换的 CSS 属性
             unitPrecision: 5, // 指定转换后的 rem 值精度，默认为 5

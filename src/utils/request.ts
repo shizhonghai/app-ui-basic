@@ -1,8 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import qs from 'qs';
-import { showToast } from 'vant';
+import { showToast, showLoadingToast, closeToast } from 'vant';
 import { Local } from '@/utils/storage';
-
+let loadingCount = 0;
 /**
  * 创建并配置一个 Axios 实例对象
  */
@@ -19,6 +19,14 @@ const service: AxiosInstance = axios.create({
  */
 service.interceptors.request.use(
     (config: AxiosRequestConfig) => {
+
+        showLoadingToast({
+            message: '加载中...',
+            forbidClick: true,
+            duration: 0,
+        });
+        loadingCount += 1
+
         // 对get请求参数进行序列化
         if (config.method === 'get') {
             // @ts-ignore 使用qs库来序列化查询参数
@@ -48,6 +56,8 @@ service.interceptors.request.use(
  * @returns 如果响应成功，则返回响应的data属性；否则，抛出错误或者执行其他操作
  */
 const handleResponse = (response: AxiosResponse<any>) => {
+    // 无论成功或失败都会执行的逻辑
+    commonLogic();
     if (response.config.responseType !== 'blob') {
         if (response.data.msg) {
             showToast({ message: response.data.msg, duration: 3000 });
@@ -57,22 +67,34 @@ const handleResponse = (response: AxiosResponse<any>) => {
 };
 
 /**
- * 添加 Axios 的响应拦截器，用于全局响应结果处理
+ * 响应拦截器处理函数
+ * @param error 错误结果
+ * @returns 如果响应失败，则抛出错误或者执行其他操作
  */
-service.interceptors.response.use(handleResponse, error => {
+const handleError = (error: any) => {
+    // 无论成功或失败都会执行的逻辑
+    commonLogic();
     const status = Number(error.response.status) || 200;
     if (status === 424) {
         localStorage.clear(); // 清除浏览器全部临时缓存
-        /*useMessageBox()
-            .confirm('令牌状态已过期，请点击重新登录')
-            .then(() => {
-                Session.clear(); // 清除浏览器全部临时缓存
-                window.location.href = '/'; // 去登录页
-                return;
-            });*/
     }
     return Promise.reject(error.response.data);
-});
+};
+const commonLogic = () => {
+    setTimeout(() => {
+        loadingCount -= 1
+        if (loadingCount <= 0) {
+            closeToast()
+        }
+    }, 500)
+}
+
+/**
+ * 添加 Axios 的响应拦截器，用于全局响应结果处理
+ */
+service.interceptors.response.use(handleResponse, handleError);
+
+
 
 // 常用header
 export enum CommonHeaderEnum {

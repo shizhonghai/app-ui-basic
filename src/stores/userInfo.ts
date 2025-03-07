@@ -2,25 +2,25 @@ import { defineStore } from 'pinia';
 
 /**
  * @function useUserInfo
- * @returns {UserInfosStore}
+ * @returns {UserInfoStore}
  */
 export const useUserInfo = defineStore('userInfo', {
     state: () => ({
-        userInfos: {
+        userInfo: {
             userData: {
                 appPermissions: []
-            }
+            },
         },
     }),
 
     actions: {
         /**
          * 获取用户信息方法
-         * @function setUserInfos
+         * @function setUserInfo
          * @async
          */
-        async setUserInfos(userInfo: any) {
-            this.userInfos = userInfo;
+        async setUserInfo(userInfo: any) {
+            this.userInfo = userInfo;
         },
     },
     // 持久化

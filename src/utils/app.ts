@@ -1,5 +1,6 @@
 import router from '@/router/index';
 import { setImageUrl, setWebUrl } from '@/utils/index';
+import { Local } from '@/utils/storage';
 /**
  * 跳转到APP首页
  */
@@ -33,7 +34,9 @@ export const loginSuccess = (result: any) => {
 
 // 结束当前页面并返回登录页面。
 export const finishAndGoToLogin = () => {
-    localStorage.clear(); // 清空所有 localStorage 数据
+    let data = Local.get('userInfo');
+    Local.clear(); // 清空所有 localStorage 数据
+    Local.set('isAutoLogin', data.userInfo.isAutoLogin);
     $App?.finishAndGoToLogin();
 };
 
@@ -85,7 +88,11 @@ export const setDeviceInfo = (result: any) => {
 // window.getLoginInfo = (res: string) => {
 //     console.log('JSON.parse(res)', JSON.parse(res));
 // };
-
+// 获取设备信息
+export const getLoginInfoApp = (res?: any) => {
+    return JSON.parse(res);
+};
+window.getLoginInfo = getLoginInfoApp;
 
 // 接收socket信息
 export const receiveSocketInfo = (result: any) => {

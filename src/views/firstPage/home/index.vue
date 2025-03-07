@@ -38,7 +38,6 @@
         <van-button v-auth="'sy-sc'" type="success">删除</van-button>
         <van-button v-auth="'sy-xg'" type="success">修改</van-button>
         <van-button v-auth="'sy-xq'" type="success">详情</van-button>
-
     </div>
 </template>
 <script lang="ts" setup>
@@ -60,13 +59,6 @@ window.getLoginInfo = getLoginInfoApp;
 window.receiveSocketInfo = (res: string) => {
     content.value = JSON.parse(res);
 };
-
-setTimeout(() => {
-    console.log(Local.get('userInfo'));
-    console.log(Local.get('token'));
-    
-}, 2000);
-
 
 // 设置用户信息
 const setUserInfoApp = () => {
@@ -144,8 +136,8 @@ let menu = [
         showTitleColor: '#111111',
         unShowTitleColor: '#1989fa',
         webUrl: setWebUrl('/center'),
-    }
-]
+    },
+];
 
 // 通知APP 更新底部菜单信息
 const setMenuParamInfoApp = () => {

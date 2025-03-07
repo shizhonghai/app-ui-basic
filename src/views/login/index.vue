@@ -10,8 +10,8 @@
                 <van-button type="primary" @click="gotoLogin" size="large">登录</van-button>
             </div>
             <div class="login-radio">
-                <van-icon name="circle" v-show="!state.checked" @click="state.checked = !state.checked" />
-                <van-icon name="checked" v-show="state.checked" @click="state.checked = !state.checked" />
+                <van-icon name="circle" v-show="!state.checked" @click="setChecked" />
+                <van-icon name="checked" v-show="state.checked" @click="setChecked" />
                 <div style="margin-left: 6px">是否自动登录</div>
             </div>
         </div>
@@ -25,13 +25,13 @@ import { useUserInfo } from '@/stores/userInfo';
 import { loginSuccess } from '@/utils/app';
 import { Local } from '@/utils/storage';
 import { showToast } from 'vant';
-
+const userInfoStore = useUserInfo();
 let websocketURL = import.meta.env.VITE_WEBSOCKET_URL;
 
 const state = reactive({
     username: 'developer',
     password: 'Yiview836266@',
-    checked: false,
+    checked: Local.get('isAutoLogin') || false,
     startPageImage: '',
     versionUpdateApi: import.meta.env.VITE_ADMIN_PROXY_PATH + '/base/sysVersion/getLatest/2',
 });
@@ -73,8 +73,6 @@ const signInSuccess = async (loginResult: any) => {
         const menuData = await getTabMenu();
         const userData = await getUserInfo();
 
-        console.log('登录成功连接websocket地址：', `ws://${websocketURL}/websocket/webSocketServer/1/1/${loginResult.user_id}/${loginResult.access_token}`);
-
         // 登录成功 -- 封装数据 -- 用户基本信息
         let successInfo = {
             menuParam: menuParam(menuData.data),
@@ -109,7 +107,7 @@ const signInSuccess = async (loginResult: any) => {
         loginSuccess(successInfo);
 
         // // 设置用户信息存入缓存
-        useUserInfo().setUserInfos(successInfo);
+        userInfoStore.setUserInfo(successInfo);
     } catch (error) {
         showToast({ message: '登录失败，请重试', duration: 3000 });
     }
@@ -140,6 +138,10 @@ const getPageLogo = async () => {
     } catch (error) {
         console.error('获取启动页面图片失败：', error);
     }
+};
+
+const setChecked = () => {
+    state.checked = !state.checked;
 };
 
 onMounted(() => {});
