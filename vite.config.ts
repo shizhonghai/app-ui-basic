@@ -17,7 +17,7 @@ export default defineConfig((mode: ConfigEnv) => {
     const env = loadEnv(mode.mode, process.cwd());
     return {
         // 生产环境增加资源路径前缀
-        base: process.env.NODE_ENV === 'development' ? '' : '/app/',
+
         plugins: [
             vue(),
             Components({
@@ -34,7 +34,9 @@ export default defineConfig((mode: ConfigEnv) => {
                 '/@': fileURLToPath(new URL('./src', import.meta.url)),
             },
         },*/
+        root: process.cwd(), // 项目根目录
         resolve: { alias }, // 路径别名配置
+        base: env.VITE_PUBLIC_PATH,
         server: {
             host: '0.0.0.0', // 服务器地址
             https: false,
