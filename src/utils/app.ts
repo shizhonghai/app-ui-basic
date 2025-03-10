@@ -4,7 +4,7 @@ import { Local } from '@/utils/storage';
 /**
  * 跳转到APP首页
  */
-// let $App: any = null;
+let $App: any = null;
 // 加载完成，页面加载基础界面后給Android端此回调。通知Android端已经完成页面的基础加载。建议每个页面都需要调用此方法。
 
 export const gotoPage = (routerName: string) => {

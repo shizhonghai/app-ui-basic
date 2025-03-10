@@ -55,14 +55,12 @@ const gotoLogin = async () => {
             app_login: 'app_login',
             scope: 'server',
         });
-        if (res.access_token) {
-            Local.set('token', res.access_token);
-            Local.set('refresh_token', res.refresh_token);
-        }
+        Local.set('token', res.access_token);
+        Local.set('refresh_token', res.refresh_token);
         // 通知登录成功
         signInSuccess(res);
     } catch (error) {
-        showToast({ message: '登录失败，请重试', duration: 3000 });
+        console.log('error', error);
     }
 };
 
@@ -109,7 +107,7 @@ const signInSuccess = async (loginResult: any) => {
         // // 设置用户信息存入缓存
         userInfoStore.setUserInfo(successInfo);
     } catch (error) {
-        showToast({ message: '登录失败，请重试', duration: 3000 });
+        console.log('error', error);
     }
 };
 

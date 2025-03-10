@@ -24,9 +24,12 @@ const app = createApp(App);
     });
 }*/
 
-import('vconsole').then(VConsole => {
-    new VConsole.default();
-});
+// import('vconsole').then(VConsole => {
+//     new VConsole.default();
+// });
+import VConsole from 'vconsole';
+// 创建 VConsole 实例
+const vConsole = new VConsole();
 
 // 导入通用自定义组件
 // app.component('Back', Back);

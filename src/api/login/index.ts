@@ -12,7 +12,7 @@ const FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded';
 export const login = (data: any) => {
   // 密码加密
   const encPassword = other.encryption(data.password, import.meta.env.VITE_PWD_ENC_KEY);
-  const { username, grant_type, app_login, scope } = data;
+  const { username, grant_type, app_login, scope, password } = data;
   return request({
     url: '/auth/oauth2/token',
     method: 'post',
