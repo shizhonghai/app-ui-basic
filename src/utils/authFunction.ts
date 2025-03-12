@@ -7,7 +7,7 @@ import { judementSameArr } from './arrayOperation';
  */
 export function auth(value: string): boolean {
     const stores = useUserInfo();
-    return stores.userInfos.userData.appPermissions.some((v: string) => v === value);
+    return stores.userInfo.userData.appPermissions.some((v: string) => v === value);
 }
 
 /**
@@ -18,7 +18,7 @@ export function auth(value: string): boolean {
 export function auths(value: Array<string>): boolean {
     let flag = false;
     const stores = useUserInfo();
-    stores.userInfos.userData.appPermissions.map((val: string) => {
+    stores.userInfo.userData.appPermissions.map((val: string) => {
         value.map((v: string) => {
             if (val === v) flag = true;
         });
@@ -33,5 +33,5 @@ export function auths(value: Array<string>): boolean {
  */
 export function authAll(value: Array<string>): boolean {
     const stores = useUserInfo();
-    return judementSameArr(value, stores.userInfos.userData.appPermissions);
+    return judementSameArr(value, stores.userInfo.userData.appPermissions);
 }
